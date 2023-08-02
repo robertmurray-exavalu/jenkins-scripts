@@ -8,7 +8,11 @@ job('demoLambda-Seed-Job') {
         stringParam('PATH', 'lambda_function.py')
         stringParam('FUNCTION_NAME', 'vsCodeCSVLambda')
         stringParam('ZIP_FILE', 'fileb://vsCodeCSVLambda.zip')
-        credentialsParam('Lambda Access', 'AWS Credentials', 'AKIASJUDC4AAITRUG4SE (Lambda Access)')
+        credentialsParam('Lambda Access') {
+            type('com.cloudbees.jenkins.plugins.awscredentials')
+            required()
+            defaultValue('AKIASJUDC4AAITRUG4SE (Lambda Access)')
+        }
     }
   }
   scm {
