@@ -2,7 +2,7 @@ job('demoLambda-Seed-Job') {
 	description("Seed job with parameters for demolambda")
   parameters{
     parameters{
-        string(name: 'GITREPO', defaultValue: 'https://github.com/robertmurray-exavalu/jenkins-scripts.git')
+        stringParam(name: 'GITREPO', defaultValue: 'https://github.com/robertmurray-exavalu/jenkins-scripts.git')
         string(name: 'GITBRANCH', defaultValue: 'main')
         string(name: 'DESTINATION_PATH', defaultValue: 'vsCodeCSVLambda.zip')
         string(name: 'PATH', defaultValue: 'lambda_function.py')
