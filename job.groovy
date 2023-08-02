@@ -19,6 +19,6 @@ job('demoLambda-Seed-Job') {
     git(GIT_REPO,GIT_BRANCH)
   }
   steps {
-    script('pipeline.groovy')
+    script(readFileFromWorkspace('pipeline.groovy'))
   }
 }
