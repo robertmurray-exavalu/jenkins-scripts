@@ -13,9 +13,6 @@ pipelineJob('demoLambda-Seed-Job') {
             defaultValue('AKIASJUDC4AAITRUG4SE (Lambda Access)')
         }
     }
-  scm {
-    git(GIT_REPO,GIT_BRANCH)
-  }
     defintition {
         cps {
             script(readFileFromWorkspace('pipeline.groovy'))
