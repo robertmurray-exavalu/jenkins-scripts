@@ -1,6 +1,5 @@
-job('demoLambda-Seed-Job') {
+pipelineJob('demoLambda-Seed-Job') {
 	description("Seed job with parameters for demolambda")
-  parameters{
     parameters{
         stringParam('GITREPO', 'https://github.com/robertmurray-exavalu/jenkins-scripts.git')
         stringParam('GITBRANCH', 'main')
@@ -14,12 +13,13 @@ job('demoLambda-Seed-Job') {
             defaultValue('AKIASJUDC4AAITRUG4SE (Lambda Access)')
         }
     }
-  }
   scm {
     git(GIT_REPO,GIT_BRANCH)
   }
-  cps {
-    script(readFileFromWorkspace('pipeline.groovy'))
-    sandbox()
-  }
+    defintition {
+        cps {
+            script(readFileFromWorkspace('pipeline.groovy'))
+            sandbox()
+        }
+    }
 }
