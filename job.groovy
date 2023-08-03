@@ -18,7 +18,8 @@ job('demoLambda-Seed-Job') {
   scm {
     git(GIT_REPO,GIT_BRANCH)
   }
-  steps {
+  cps {
     script(readFileFromWorkspace('pipeline.groovy'))
+    sandbox()
   }
 }
