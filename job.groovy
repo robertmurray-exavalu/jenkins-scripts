@@ -12,11 +12,12 @@ pipelineJob('demoLambda-Seed-Job') {
             required()
             defaultValue('AKIASJUDC4AAITRUG4SE (Lambda Access)')
         }
-    }
-    defintition {
+        definition {
         cps {
             script(readFileFromWorkspace('pipeline.groovy'))
             sandbox()
         }
     }
+    }
+    
 }
