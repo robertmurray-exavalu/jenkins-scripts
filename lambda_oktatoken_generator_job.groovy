@@ -164,7 +164,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
             definition {
                 cps{
                     script('ls')
-                    script(readFileFromWorkspace('lambda_okta_generator_pipeline.groovy'))
+                    script(readFileFromWorkspace('lambda_oktatoken_generator_pipeline.groovy'))
                     sandbox()
                 }
             }
