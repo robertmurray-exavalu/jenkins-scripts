@@ -154,11 +154,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                     script("if (environment.equals('dev')){return['https://dev-04923793.okta.com/oauth2/default/v1/token']} else if (environment.equals('prod')){return['https://copperpoint.okta.com/oauth2/default/v1/token']}")
                 }
             }
-            wReadonlyStringParameterDefinition {
-                name('gitURL')
-                defaultValue("$gitURL")
-                description('')
-            }
+            
             choiceParam('MemorySize', ['1024', '2048', '3072'], '')
             choiceParam('Timeout', ['180', '600', '900'], '')
             choiceParam('Architecture', ['x86_64'], '')
