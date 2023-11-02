@@ -1,8 +1,6 @@
 dev_env = params.environment in ['dev']
 prod_env = params.environment in ['prod']
 
-approvers_dev_env = ['sray@copperpoint.com','CP0365-esb-cp-itsupport@copperpoint.com', 'CPO365-ITArchitecture@copperpoint.onmicrosoft.com']
-
 pipeline {
     agent {
         label 'ecs'
