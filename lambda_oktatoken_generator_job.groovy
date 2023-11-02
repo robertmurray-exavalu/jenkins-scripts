@@ -167,7 +167,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
             stringParam('lambda_layer', 'Sample Lambda Layer', '')
             definition {
                 cps{
-                    script(readFileFromWorkspace('./pipelines/lambda_okta_generator_pipeline.groovy'))
+                    script(readFileFromWorkspace('./lambda_okta_generator_pipeline.groovy'))
                     sandbox()
                 }
             }
