@@ -119,6 +119,15 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 }
                 referencedParameter('environment')
             }
+            activeChoiceParam('token_url'){
+                description('URL for Token Retrieval')
+                choiceType('SINGLE_SELECT')
+                referencedParameter("environment")
+                groovyScript {
+                    script("return['https://dev-04923793.okta.com/oauth2/default/v1/token']}")
+                }
+                
+            }
             activeChoiceParam('token_scope'){
                 description('Scope of Token Access')
                 choiceType('SINGLE_SELECT')
@@ -151,15 +160,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 }
                 
             }
-            activeChoiceParam('token_url'){
-                description('URL for Token Retrieval')
-                choiceType('SINGLE_SELECT')
-                referencedParameter("environment")
-                groovyScript {
-                    script("return['https://dev-04923793.okta.com/oauth2/default/v1/token']}")
-                }
-                
-            }
+           
             // wReadonlyStringParameterDefinition {
             //     name('gitURL')
             //     defaultValue("$gitURL")
