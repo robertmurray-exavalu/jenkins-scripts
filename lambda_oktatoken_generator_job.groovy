@@ -157,6 +157,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 groovyScript {
                     script("return['https://dev-04923793.okta.com/oauth2/default/v1/token']}")
                 }
+                referencedParameter('environment')
             }
             // wReadonlyStringParameterDefinition {
             //     name('gitURL')
