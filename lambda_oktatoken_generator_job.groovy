@@ -125,7 +125,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 groovyScript {
                     script('return ["offline_access"]')
                 }
-                referencedParameter('environment')
+                
             }
             activeChoiceParam('token_grant_type'){
                 description('Grant Type of Token Access')
@@ -133,7 +133,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 groovyScript {
                     script('return ["password"]')
                 }
-                referencedParameter('environment')
+                
             }
             activeChoiceParam('token_secret_name'){
                 description('Secret Name for Token')
@@ -141,7 +141,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 groovyScript {
                     script('return ["cpic-nonprod-okta-token-VcWHOM"]')
                 }
-                referencedParameter('environment')
+                
             }
             activeChoiceParam('token_region'){
                 description('Region of Token')
@@ -149,7 +149,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 groovyScript {
                     script('return ["us-west-2"]')
                 }
-                referencedParameter('environment')
+                
             }
             //Figured out if you use the Teams Copy link, it doesn't paste it as plain text.
             activeChoiceParam('token_url'){
