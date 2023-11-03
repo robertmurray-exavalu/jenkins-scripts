@@ -33,7 +33,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script("if (environment.equals('dev')){return['subnet-047c3c97ab26ed263:selected']} else if (environment.equals('qa') || environment.equals('uat')){return['subnet-08840e286a6ef0a44:selected']} else if (environment.equals('prod')){return['subnet-0d4d44c8f81a888d4:selected']}")
+                    script("if (environment.equals('dev')){return['subnet-047c3c97ab26ed263:selected']} else if (environment.equals('prod')){return['subnet-0d4d44c8f81a888d4:selected']}")
                     fallbackScript('return["error"]')
                 }
                 referencedParameter('environment')
@@ -154,7 +154,11 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                     script("if (environment.equals('dev')){return['https://dev-04923793.okta.com/oauth2/default/v1/token']} else if (environment.equals('prod')){return['https://copperpoint.okta.com/oauth2/default/v1/token']}")
                 }
             }
-            
+            wReadonlyStringParameterDefinition {
+                name('gitURL')
+                defaultValue("$gitURL")
+                description('')
+            }
             choiceParam('MemorySize', ['1024', '2048', '3072'], '')
             choiceParam('Timeout', ['180', '600', '900'], '')
             choiceParam('Architecture', ['x86_64'], '')
@@ -163,8 +167,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
             stringParam('lambda_layer', 'Sample Lambda Layer', '')
             definition {
                 cps{
-                    script('ls')
-                    script(readFileFromWorkspace('lambda_oktatoken_generator_pipeline.groovy'))
+                    script(readFileFromWorkspace('./pipelines/lambda_okta_generator_pipeline.groovy'))
                     sandbox()
                 }
             }
