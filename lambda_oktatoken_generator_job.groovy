@@ -151,7 +151,6 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 }
                 
             }
-            //Figured out if you use the Teams Copy link, it doesn't paste it as plain text.
             activeChoiceParam('token_url'){
                 description('URL for Token Retrieval')
                 choiceType('SINGLE_SELECT')
