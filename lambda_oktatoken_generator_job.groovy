@@ -154,10 +154,11 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
             activeChoiceParam('token_url'){
                 description('URL for Token Retrieval')
                 choiceType('SINGLE_SELECT')
+                referencedParameter('environment')
                 groovyScript {
                     script("return['https://dev-04923793.okta.com/oauth2/default/v1/token']}")
                 }
-                referencedParameter('environment')
+                
             }
             // wReadonlyStringParameterDefinition {
             //     name('gitURL')
