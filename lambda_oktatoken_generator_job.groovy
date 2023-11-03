@@ -151,7 +151,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('URL for Token Retrieval')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script("if (environment.equals('dev')){return['https://dev-04923793.okta.com/oauth2/default/v1/token']}")
+                    script("return['https://dev-04923793.okta.com/oauth2/default/v1/token']")
                 }
             }
             // wReadonlyStringParameterDefinition {
