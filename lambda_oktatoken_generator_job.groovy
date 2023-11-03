@@ -124,7 +124,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 choiceType('SINGLE_SELECT')
                 referencedParameter("environment")
                 groovyScript {
-                    script("return['https://dev-04923793.okta.com/oauth2/default/v1/token']}")
+                    script("return['https://dev-04923793.okta.com/oauth2/default/v1/token']")
                 }
                 
             }
