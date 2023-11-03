@@ -122,7 +122,6 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
             activeChoiceReactiveParam('token_url'){
                 description('URL for Token Retrieval')
                 choiceType('SINGLE_SELECT')
-                filterable()
                 groovyScript {
                     script('if(environment.equals("dev")){return["https://dev-04923793.okta.com/oauth2/default/v1/token"]} else if (environment.equals("prod")){return["https://copperpoint.okta.com/oauth2/default/v1/token"]}')
                     fallbackScript('return["error"]')
