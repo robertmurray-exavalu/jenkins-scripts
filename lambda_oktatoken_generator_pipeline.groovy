@@ -58,9 +58,6 @@ wrap([$class: 'BuildUser']) {
     if (dev_env){
         approvers = approvers_dev_env
         println "Please approve the deployment of the lambda function to ${environment}"
-    }else if(uat_env){
-        approvers = approvers_uat_env
-        println "Please approve the deployment of the lambda function to ${environment}"
     }else if (prod_env){
         approvers = approvers_prod_env
         println "Please approve the deployment of the lambda function to ${environment}"
