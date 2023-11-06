@@ -160,11 +160,11 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 }
                 referencedParameter('environment')
             }
-            wReadonlyStringParameterDefinition {
-                name('gitURL')
-                defaultValue("$gitURL")
-                description('')
-            }
+            // wReadonlyStringParameterDefinition {
+            //     name('gitURL')
+            //     defaultValue("$gitURL")
+            //     description('')
+            // }
             choiceParam('MemorySize', ['1024', '2048', '3072'], '')
             choiceParam('Timeout', ['180', '600', '900'], '')
             choiceParam('Architecture', ['x86_64'], '')
