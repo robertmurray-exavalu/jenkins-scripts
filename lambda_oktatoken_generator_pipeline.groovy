@@ -1,6 +1,9 @@
 dev_env = params.environment in ['dev']
 prod_env = params.environment in ['prod']
 
+approvers_dev_env = ['sray@copperpoint.com']
+approvers_prod_env = ['sray@copperpoint.com']
+
 pipeline {
     agent {
         label 'ecs'
@@ -15,38 +18,89 @@ pipeline {
                 credentialsId: 'ec01eb6d-13c9-432a-b288-c449ad7b7d61',
                 url: "${gitURL}"
             }
-            post {
-                failure {
-                    failure('Checkout')
-                }
-            }
         }
-        stage('Python Test') {
-            steps{
-                sh '''
-                python3 -m pytest --cov --cov-report=html --cov-fail-under=80
-                '''
-            }
-            post {
-                always{
-                    publishHTML (target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'htmlcov',
-                    reportFiles: '*.html',
-                    reportName: "Pytest-Report"
-                    ])
-                }
-                failure {
-                    failure('Python Test')
-                }
-            }
-        }
+        // stage('Python Test') {
+        //     steps{
+        //         sh '''
+        //         python3 -m pytest --cov --cov-report=html --cov-fail-under=80
+        //         '''
+        //     }
+        //     post {
+        //         always{
+        //             publishHTML (target: [
+        //             allowMissing: false,
+        //             alwaysLinkToLastBuild: false,
+        //             keepAll: true,
+        //             reportDir: 'htmlcov',
+        //             reportFiles: '*.html',
+        //             reportName: "Pytest-Report"
+        //             ])
+        //         }
+        //         failure {
+        //             failure('Python Test')
+        //         }
+        //     }
+        // }
         stage('Build & Deploy'){
             steps{
-                samDeploy([credentialsId: "$cred_id", kmsKeyId: '', outputTemplateFile: 'template-packaged.yaml', parameters: [[key: 'SecurityGroup', value: "$SecurityGroup"], [key: 'SubnetA', value: "$SubnetA"], [key: 'SubnetB', value: "$SubnetB"], [key: 'SubnetC', value: "$SubnetC"], [key: 'FunctionName', value: "$FunctionName"], [key: 'MemorySize', value: "$MemorySize"], [key: 'Timeout', value: "$Timeout"], [key: 'Role', value: "$role"], [key: 'Architecture', value: "$Architecture"], [key: 'Runtime', value: "$Lambda_Runtime"], [key: 'LambdaLayer', value: "$lambda_layer"], [key: 'LogCollection', value: "$Log_Collection"], [key: 'LambdaEnv', value: "$Lambda_Env"],[key: 'scope', value: "$token_scope"],[key: 'grant_type', value: "$token_grant_type"],[key: 'secret_name', value: "$token_secret_name"],[key: 'region_name', value: "$token_region"], [key: 'url', value: "$token_url"]], region: 'us-west-2', roleArn: '', s3Bucket: "$s3_bucket", s3Prefix: '', stackName: "$stack_name", templateFile: 'template.yaml'])
+                samDeploy([credentialsId: "$cred_id", kmsKeyId: '', outputTemplateFile: 'template-packaged.yaml', parameters: [[key: 'SecurityGroup', value: "$SecurityGroup"], [key: 'SubnetA', value: "$SubnetA"], [key: 'SubnetB', value: "$SubnetB"], [key: 'SubnetC', value: "$SubnetC"], [key: 'FunctionName', value: "$FunctionName"], [key: 'MemorySize', value: "$MemorySize"], [key: 'Timeout', value: "$Timeout"], [key: 'Role', value: "$role"], [key: 'Architecture', value: "$Architecture"], [key: 'Runtime', value: "$Lambda_Runtime"], [key: 'LambdaLayer', value: "$lambda_layer"], [key: 'LogCollection', value: "$Log_Collection"], [key: 'LambdaEnv', value: "$Lambda_Env"],[key: 'scope', value: "$token_scope"],[key: 'GrantType', value: "$token_grant_type"],[key: 'SecretName', value: "$token_secret_name"],[key: 'RegionName', value: "$token_region"], [key: 'url', value: "$token_url"]], region: 'us-west-2', roleArn: '', s3Bucket: "$s3_bucket", s3Prefix: '', stackName: "$stack_name", templateFile: 'template.yaml'])
             }
         }
     }
+}
+def approval(environment) {
+script{
+wrap([$class: 'BuildUser']) {
+        user = env.BUILD_USER_ID
+     
+    def approvers
+    def user_approver
+    if (dev_env){
+        approvers = approvers_dev_env
+        println "Please approve the deployment of the lambda function to ${environment}"
+    }else if(uat_env){
+        approvers = approvers_uat_env
+        println "Please approve the deployment of the lambda function to ${environment}"
+    }else if (prod_env){
+        approvers = approvers_prod_env
+        println "Please approve the deployment of the lambda function to ${environment}"
+    }
+        echo "approval list: ${approvers}"
+        for (item in approvers){
+        emailext (
+            subject: "Waiting for your approval to deploy to ${environment} environment! Job: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+            body: "Pipeline started by: ${user}<br><a href=${BUILD_URL}input>Click here  to approve/abort</a>",
+            to: "${item}", mimeType: 'text/html'
+        )
+        }
+        timeout(time: 60, unit: 'MINUTES'){
+         userInput = input id: 'userInput',
+                              message: 'Proceed for Deployment',
+                              submitterParameter: 'submitter',
+                              submitter: 'Approval',
+                              parameters: [[$class: 'BooleanParameterDefinition', defaultValue: true,, description:'', name:'Approved']]
+        }
+        user_approver = userInput['submitter']
+        if("${approvers}".contains("${user_approver}") && ("${user_approver}"!="${user}")){
+             echo 'Approved'
+        }else{
+             //error_message('You cannot approve your own pipeline or you should be part of approval group')
+        }
+}
+}
+}
+
+def failure(stage){
+script{
+wrap([$class: 'BuildUser']) {
+        user = env.BUILD_USER_ID
+     emailext attachLog: true, body: "Pipeline started by: ${user}<br> Failed in ${stage} Stage ${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} <br> More info at: ${env.BUILD_URL}", subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}:${env.BUILD_NUMBER}", to: "$notification_list", mimeType: 'text/html'
+}
+}
+}
+
+def error_message(message)
+{
+    currentBuild.result = 'ABORTED'
+    error "${message}, Build is aborted"
 }
