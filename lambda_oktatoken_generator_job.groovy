@@ -24,7 +24,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script("if (environment.equals('dev')){return['sg-0016836cb8aacbc23:selected']} else if (environment.equals('prod')){return['sg-0ab365b1bd5ba6947:selected']}")
+                    script("if (environment.equals('dev')){return['sg-01ccbd5c4c8a318a6:selected']} else if (environment.equals('prod')){return['sg-0368890663d3ef3a4:selected']}")
                     fallbackScript('return["error"]')
                 }
                 referencedParameter('environment')
@@ -33,7 +33,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script("if (environment.equals('dev')){return['subnet-047c3c97ab26ed263:selected']} else if (environment.equals('prod')){return['subnet-0d4d44c8f81a888d4:selected']}")
+                    script("if (environment.equals('dev')){return['subnet-08840e286a6ef0a44:selected']} else if (environment.equals('prod')){return['subnet-0d4d44c8f81a888d4:selected']}")
                     fallbackScript('return["error"]')
                 }
                 referencedParameter('environment')
@@ -42,7 +42,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script("if (environment.equals('dev')){return['subnet-0684240fab6c949ae:selected']} else if (environment.equals('prod')){return['subnet-0178d984fb3c6ea23:selected']}")
+                    script("if (environment.equals('dev')){return['subnet-0af7e31a81b8d8810:selected']} else if (environment.equals('prod')){return['subnet-0178d984fb3c6ea23:selected']}")
                     fallbackScript('return["error"]')
                 }
                 referencedParameter('environment')
@@ -51,7 +51,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script("if (environment.equals('dev')){return['subnet-064511c099829fe3d:selected']} else if (environment.equals('prod')){return['subnet-009a020f928b1f8a6:selected']}")
+                    script("if (environment.equals('dev')){return['subnet-0911ce3c16fa99d77:selected']} else if (environment.equals('prod')){return['subnet-009a020f928b1f8a6:selected']}")
                     fallbackScript('return["error"]')
                 }
                 referencedParameter('environment')
@@ -87,7 +87,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script("if (environment.equals('dev')){return['arn:aws:iam::594834477086:role/cpic-sandbox-integ:selected']} else if (environment.equals('prod')){return['arn:aws:iam::448503678883:role/cpic-integ-prod:selected']}")
+                    script("if (environment.equals('dev')){return['arn:aws:iam::314704840185:role/cpic-integ-nonprd:selected']} else if (environment.equals('prod')){return['arn:aws:iam::448503678883:role/cpic-integ-prod:selected']}")
                     fallbackScript('return["error"]')
                 }
                 referencedParameter('environment')
@@ -160,11 +160,11 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 }
                 referencedParameter('environment')
             }
-            // wReadonlyStringParameterDefinition {
-            //     name('gitURL')
-            //     defaultValue("$gitURL")
-            //     description('')
-            // }
+            wReadonlyStringParameterDefinition {
+                name('gitURL')
+                defaultValue("$gitURL")
+                description('')
+            }
             choiceParam('MemorySize', ['1024', '2048', '3072'], '')
             choiceParam('Timeout', ['180', '600', '900'], '')
             choiceParam('Architecture', ['x86_64'], '')
@@ -173,7 +173,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
             stringParam('lambda_layer', 'Sample Lambda Layer', '')
             definition {
                 cps{
-                    script(readFileFromWorkspace('./lambda_oktatoken_generator_pipeline.groovy'))
+                    script(readFileFromWorkspace('./pipelines/lambda_oktatoken_generator_pipeline.groovy'))
                     sandbox()
                 }
             }
