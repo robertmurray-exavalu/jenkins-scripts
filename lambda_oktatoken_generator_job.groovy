@@ -87,7 +87,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script("if (environment.equals('dev')){return['arn:aws:iam::314704840185:role/cpic-integ-nonprd:selected']} else if (environment.equals('prod')){return['arn:aws:iam::448503678883:role/cpic-integ-prod:selected']}")
+                    script("if (environment.equals('dev')){return[]} else if (environment.equals('prod')){return['arn:aws:iam::448503678883:role/cpic-integ-prod:selected']}")
                     fallbackScript('return["error"]')
                 }
                 referencedParameter('environment')
