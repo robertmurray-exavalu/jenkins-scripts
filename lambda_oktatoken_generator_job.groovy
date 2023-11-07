@@ -24,7 +24,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script("if (environment.equals('dev')){return['sg-01ccbd5c4c8a318a6:selected']} else if (environment.equals('prod')){return['sg-0368890663d3ef3a4:selected']}")
+                    script("if (environment.equals('dev')){return['sg-0e03e244b6239de0d:selected']} else if (environment.equals('prod')){return['sg-0368890663d3ef3a4:selected']}")
                     fallbackScript('return["error"]')
                 }
                 referencedParameter('environment')
@@ -96,7 +96,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script("if (environment.equals('dev')){return['${job_name}-dev:selected']} else if (environment.equals('prod')){return['${job_name}-prod:selected']}")
+                    script("if (environment.equals('dev')){return['${job_name}-nonprd:selected']} else if (environment.equals('prod')){return['${job_name}-prod:selected']}")
                     fallbackScript('return["error"]')
                 }
                 referencedParameter('environment')
@@ -139,7 +139,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('Secret Name for Token')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script('return ["cpic-nonprod-okta-token-VcWHOM"]')
+                    script('return ["cpic-nonprod-okta-token"]')
                 }
                 
             }
