@@ -24,7 +24,7 @@ def lambdaDeploymentJobs(job_name, gitURL, FunctionName){
                 description('')
                 choiceType('SINGLE_SELECT')
                 groovyScript {
-                    script("if (environment.equals('dev')){return['']} else if (environment.equals('prod')){return['sg-0368890663d3ef3a4:selected']}")
+                    script("if (environment.equals('dev')){return['sg-0e03e244b6239de0d:selected']} else if (environment.equals('prod')){return['sg-0368890663d3ef3a4:selected']}")
                     fallbackScript('return["error"]')
                 }
                 referencedParameter('environment')
