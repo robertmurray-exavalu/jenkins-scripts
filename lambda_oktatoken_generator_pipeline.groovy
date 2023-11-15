@@ -30,9 +30,7 @@ pipeline {
             }
             post{
                 always{
-                    dir('test') {
-                        deleteDir()
-                    }
+                    bat'''rd tests'''
                     bat'''dir'''
                 }
             }
