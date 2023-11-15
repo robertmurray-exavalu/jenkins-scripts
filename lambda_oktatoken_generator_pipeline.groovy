@@ -30,8 +30,8 @@ pipeline {
             }
             post{
                 always{
-                    ps'''git clean -d -f -x'''
-                    ps'''ls'''
+                    powershell'''git clean -d -f -x'''
+                    powershell'''ls'''
                 }
             }
             
