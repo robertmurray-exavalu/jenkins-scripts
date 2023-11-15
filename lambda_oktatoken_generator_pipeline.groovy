@@ -14,9 +14,9 @@ pipeline {
             steps{
                 deleteDir()
                 approval(params.environment)
-                git branch: "${gitBranch}",
+                git branch: "main",
                 credentialsId: 'c109308d-28d6-4bed-bd08-60f713447612',
-                url: "${gitURL}"
+                url: "git@github.com:robertmurray-exavalu/jenkins-scripts.git"
             }
         }
         stage('Python Test') {
