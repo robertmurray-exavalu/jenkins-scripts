@@ -30,7 +30,7 @@ pipeline {
             }
             post{
                 always{
-                    powershell'''git clean -d -f -x'''
+                    powershell'''git clean -d -f '''
                     powershell'''ls'''
                     powershell''' rmdir -r tests'''
                     powershell'''ls'''
