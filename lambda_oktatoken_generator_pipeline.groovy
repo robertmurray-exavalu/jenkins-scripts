@@ -16,7 +16,7 @@ pipeline {
                 approval(params.environment)
                 git branch: "main",
                 credentialsId: 'c109308d-28d6-4bed-bd08-60f713447612',
-                url: "git@github.com:robertmurray-exavalu/jenkins-scripts.git"
+                url: "git@github.com:robertmurray-exavalu/testJenkinsDeploy.git"
             }
         }
         stage('Python Test') {
