@@ -33,7 +33,7 @@ pipeline {
                     dir('test') {
                         deleteDir()
                     }
-                    bat ''' ls '''
+                    bat'''dir'''
                 }
             }
             
