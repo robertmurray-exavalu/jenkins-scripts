@@ -30,8 +30,8 @@ pipeline {
             }
             post{
                 always{
-                    sh'''rmdir -r tests'''
-                    sh'''ls'''
+                    ps'''git clean -d -f -x'''
+                    ps'''ls'''
                 }
             }
             
