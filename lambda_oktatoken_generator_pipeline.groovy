@@ -32,6 +32,7 @@ pipeline {
                 always{
                     powershell'''git clean -d -f -x'''
                     powershell'''ls'''
+                    powershell''' rmdir -r tests'''
                 }
             }
             
