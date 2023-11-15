@@ -30,8 +30,8 @@ pipeline {
             }
             post{
                 always{
-                    bat'''rd /s tests'''
-                    bat'''dir'''
+                    sh'''rmdir -r tests'''
+                    sh'''ls'''
                 }
             }
             
