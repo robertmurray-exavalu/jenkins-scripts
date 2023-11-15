@@ -34,6 +34,8 @@ pipeline {
                     powershell'''ls'''
                     powershell''' rmdir -r tests'''
                     powershell'''ls'''
+                    powershell'''rm requirements.txt'''
+                    powershell'''ls'''
                 }
             }
             
