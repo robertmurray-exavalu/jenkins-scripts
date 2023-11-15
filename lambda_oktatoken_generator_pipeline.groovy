@@ -28,6 +28,13 @@ pipeline {
                 python3.11 -m pytest --cov --cov-report=html --cov-fail-under=80
                 '''
             }
+            post{
+                always{
+                    dir('test') {
+                        deleteDir()
+                    }
+                }
+            }
             
         }
         
