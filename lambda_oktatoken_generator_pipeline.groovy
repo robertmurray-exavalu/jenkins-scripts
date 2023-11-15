@@ -26,21 +26,7 @@ pipeline {
                 python3 -m pytest --cov --cov-report=html --cov-fail-under=80
                 '''
             }
-            post {
-                always{
-                    publishHTML (target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'htmlcov',
-                    reportFiles: '*.html',
-                    reportName: "Pytest-Report"
-                    ])
-                }
-                failure {
-                    failure('Python Test')
-                }
-            }
+            
         }
         
     }
