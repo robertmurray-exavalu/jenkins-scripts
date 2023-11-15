@@ -22,7 +22,9 @@ pipeline {
         stage('Python Test') {
             steps{
                 bat '''
-                python3.11 -m pip install -r requirements.txt \
+                python3.11 -m pip install -r requirements.txt 
+                '''
+                bat '''
                 python3.11 -m pytest --cov --cov-report=html --cov-fail-under=80
                 '''
             }
