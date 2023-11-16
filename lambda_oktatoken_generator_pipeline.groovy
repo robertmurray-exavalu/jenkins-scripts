@@ -30,12 +30,14 @@ pipeline {
             }
             post{
                 always{
-                    powershell'''git clean -d -f -x'''
-                    powershell'''ls'''
-                    powershell''' rmdir -r tests'''
-                    powershell'''ls'''
-                    powershell'''rm requirements.txt'''
-                    powershell'''ls'''
+                    powershell'''
+                        git clean -d -f -x
+                        rmdir -r tests
+                        rm requirements.txt
+                        ls
+                        rm .gitignore
+                        ls
+                    '''
                 }
             }
             
